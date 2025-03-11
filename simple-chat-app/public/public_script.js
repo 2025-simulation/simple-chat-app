@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
 
-    // Send message when button is clicked
+    //发送消息
     sendButton.addEventListener('click', sendMessage);
 
-    // Send message when Enter key is pressed (but allow Shift+Enter for new lines)
+    //回车键发送消息，shift+回车换行
     userInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
@@ -19,23 +19,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (message === '') return;
         
-        // Add user message to chat history
+        //添加到聊天历史记录
         addMessageToChat('user', message);
         
-        // Clear input
+        //清空输入框
         userInput.value = '';
 
-        // Add loading indicator
         const loadingElement = document.createElement('div');
         loadingElement.className = 'message bot-message';
         loadingElement.innerHTML = 'Thinking<span class="loading">...</span>';
         loadingElement.id = 'loading-message';
         chatHistory.appendChild(loadingElement);
         
-        // Scroll to bottom
+        //滚动到底部
         chatHistory.scrollTop = chatHistory.scrollHeight;
 
-        // Send message to server
+        //将消息发送到服务器
         fetch('http://localhost:3000/api/chat', {
             method: 'POST',
             headers: {
@@ -45,25 +44,23 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            // Remove loading indicator
+
             const loadingMessage = document.getElementById('loading-message');
             if (loadingMessage) {
                 chatHistory.removeChild(loadingMessage);
             }
             
-            // Add bot response to chat history
             addMessageToChat('bot', data.response);
         })
         .catch(error => {
             console.error('Error:', error);
             
-            // Remove loading indicator
             const loadingMessage = document.getElementById('loading-message');
             if (loadingMessage) {
                 chatHistory.removeChild(loadingMessage);
             }
             
-            // Add error message
+            //发生错误
             addMessageToChat('bot', 'Sorry, something went wrong. Please try again.');
         });
     }
@@ -74,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         messageElement.textContent = message;
         chatHistory.appendChild(messageElement);
         
-        // Scroll to bottom
+        
         chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 });

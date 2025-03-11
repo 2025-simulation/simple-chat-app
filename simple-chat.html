@@ -113,10 +113,8 @@
             
             const apiKey = "";
 
-            // Send message when button is clicked
             sendButton.addEventListener('click', sendMessage);
 
-            // Send message when Enter key is pressed (but allow Shift+Enter for new lines)
             userInput.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter' && !event.shiftKey) {
                     event.preventDefault();
@@ -129,23 +127,18 @@
                 
                 if (message === '') return;
                 
-                // Add user message to chat history
                 addMessageToChat('user', message);
                 
-                // Clear input
                 userInput.value = '';
 
-                // Add loading indicator
                 const loadingElement = document.createElement('div');
                 loadingElement.className = 'message bot-message';
                 loadingElement.innerHTML = 'Thinking<span class="loading">...</span>';
                 loadingElement.id = 'loading-message';
                 chatHistory.appendChild(loadingElement);
                 
-                // Scroll to bottom
                 chatHistory.scrollTop = chatHistory.scrollHeight;
 
-                // Call OpenAI API directly
                 fetch('https://api.openai.com/v1/chat/completions', {
                     method: 'POST',
                     headers: {
@@ -165,26 +158,22 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Remove loading indicator
                     const loadingMessage = document.getElementById('loading-message');
                     if (loadingMessage) {
                         chatHistory.removeChild(loadingMessage);
                     }
                     
-                    // Add bot response to chat history
                     const botResponse = data.choices[0].message.content;
                     addMessageToChat('bot', botResponse);
                 })
                 .catch(error => {
                     console.error('Error:', error);
                     
-                    // Remove loading indicator
                     const loadingMessage = document.getElementById('loading-message');
                     if (loadingMessage) {
                         chatHistory.removeChild(loadingMessage);
                     }
                     
-                    // Add error message
                     addMessageToChat('bot', 'Sorry, something went wrong. Please try again. Error: ' + error.message);
                 });
             }
@@ -195,7 +184,6 @@
                 messageElement.textContent = message;
                 chatHistory.appendChild(messageElement);
                 
-                // Scroll to bottom
                 chatHistory.scrollTop = chatHistory.scrollHeight;
             }
         });

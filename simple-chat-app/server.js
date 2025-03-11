@@ -4,16 +4,15 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-// Middleware
 app.use(express.json());
 app.use(cors());
 
-// Initialize OpenAI client
+//创建客户端对象
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY // Use environment variable for API key
 });
 
-// API endpoint
+//设置API
 app.post('/api/chat', async (req, res) => {
   try {
     const userMessage = req.body.message;
@@ -35,10 +34,9 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// Serve static files
 app.use(express.static('public'));
 
-// Start server
+//启动服务器
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:3000`);
 });

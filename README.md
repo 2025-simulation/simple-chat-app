@@ -6,8 +6,8 @@
 
 ## 服务器前后端分离运行：
 1. 安装 Node.js
-2. 切换到 `simple-chat-app` 目录下  
-3. 打开cmd，输入 `npm install`
+2. 切换到 `dev` 目录下  
+3. 打开cmd，输入 `sudo npm install`
 4. 设置临时环境变量: `set OPENAI_API_KEY=<api-key>`
-5. 启动本地服务器: `nmp start`
+5. 启动本地服务器: `npm start`
 6. 在浏览器中访问 [here](http://localhost:3000)

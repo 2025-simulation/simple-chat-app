@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple OpenAI Chat</title>
+    <title>Simple DeepSeek Chat</title>
+    <script src="config.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -95,7 +96,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Chat with GPT-4o-mini</h1>
+        <h1>Chat with DeepSeek-R1</h1>
         <div class="chat-container">
             <div id="chat-history"></div>
             <div class="input-area">
@@ -111,7 +112,7 @@
             const userInput = document.getElementById('user-input');
             const sendButton = document.getElementById('send-button');
             
-            const apiKey = "";
+            const apiKey = CONFIG.DEEPSEEK_API_KEY;
 
             sendButton.addEventListener('click', sendMessage);
 
@@ -139,14 +140,14 @@
                 
                 chatHistory.scrollTop = chatHistory.scrollHeight;
 
-                fetch('https://api.openai.com/v1/chat/completions', {
+                fetch('https://ark.cn-beijing.volces.com/api/v3/chat/completions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
-                        model: "gpt-4o-mini",
+                        model: "ep-20250306145940-q4mwg",
                         messages: [{ role: "user", content: message }],
                         store: true
                     })
